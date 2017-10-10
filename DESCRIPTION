@@ -4,7 +4,7 @@ Title: Create Consensus Genetic Maps and Estimate Recombination Rates
 Version: 0.1.1
 Author: Dennis van Muijen, Ram Kumar Basnet, Nathalie J. Dek
 Maintainer: Dennis van Muijen <d.van.muijen@rijkzwaan.nl>
-Description: Create consensus genetic maps with LPmerge (see Endelman and Plomion et al.,2014) and model the relationship between genomic and genetic distance using thin-plate regression splines (see Wood et al.,2003). Perform quality control on input data and visualise intermediate steps.
+Description: Create consensus genetic maps with LPmerge, see Endelman and Plomion (2014) <doi: 10.1093/bioinformatics/btu091> and model the relationship between genomic and genetic distance using thin-plate regression spline, see Wood (2003) <doi: 10.1111/1467-9868.00374>. Perform quality control on input data and visualise intermediate steps.
 Depends:
     igraph
 Imports:
