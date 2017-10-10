@@ -55,37 +55,22 @@ Especially historical genetic maps may have inverted linkage groups. Genetic map
 
 ```{r, message=FALSE}
 ## Linkage groups with insufficient markers are removed and each linkage group is alligned to the reference. 
-
 MF.obj <- map_qc(MF.obj, anchors = 3)
 ### Plot input data as network
 plot(MF.obj, which = "mapnetwork", chr = 1)
-# Plot data after QC pass
+### Plot qc passed data
 plot(MF.obj, which = "mst", chr = 1)
-
-### Other plotting options
-##Plot individual map
-#plot(MF.obj, which = "single_map", maps = "Col-0_Sha.csv")
-#Compare two maps
-#plot(MF.obj, which = "compare_maps", chr = 1:5,
-#maps = c("Col-0_Sha.csv","Col-0_Blh-1.csv"))
+##See ?plot.mapfuser for further options
 ```
 
 
 ### Map Integration
 A parallel version of LPmerge is implemented with the option to select the consensus map with lowest overall Root Mean Square Error (RMSE) automatically. The map_export function provides functionality to export a consensus map in JoinMap/mapchart format. The consensus map in simple delimited format is available in the MapFuser object
 
-```{r, message=FALSE, warning=FALSE, fig.width=3, fig.height=3, dpi=36}
+```{r, message=FALSE, warning=FALSE, fig.width=7, fig.height=7, dpi=36}
 MF.obj <- LPmerge_par(MF.obj, n.cores = 2, max.interval = 1, max.int_sel = "auto")
+plot(MF.obj, which = "single_map", maps = "consensus")
 
-### Plot results
-#plot(MF.obj, which = "single_map", maps = "consensus")
-### Exporting results
-# Write as .map file
-# map_export(MF.obj, "Col-0_multipop")
-# Write to csv
-# write.csv(MF.obj$result$consensus_map, 
-#           file = "Col-0_multipop.csv",
-#           quote = F, row.names = F)
 ```
 
 ### Modeling genetic vs. genomic distance
@@ -93,15 +78,9 @@ A thin-plate accurately captures the relationship between genetic and genomic di
 
 
 ```{r, message=FALSE, fig.width=7, fig.height=7}
-# Consensus map
+# Fit model
 MF.obj <-  genphys_fit(MF.obj, type = "consensus", z = 5)
 plot(MF.obj, which = "mareymap", maps = "consensus")
-```
-
-Additionally, the recombination rate can be plotted.
-```{r, message=FALSE, dpi=36}
-# Recombination rate
-#plot(MF.obj, which = "recombination_rate", map = "consensus")
 ```
 
 ## Predicting and interpolating/extrapolating
@@ -113,15 +92,8 @@ predict_file <- list.files(fpath,
                        pattern = "BaySha_physical", 
                        full.names = T)
 to_predict <- read.table(predict_file, sep = ",", header = T)
+# Predict, accessible under MF.obj$predictions
 MF.obj <- predict(MF.obj, to_predict)
-
-# Write to csv
-# write.table(MF.obj$predictions, 
-#             file = "interpolated_positions.csv",
-#             sep = ",", 
-#             col.names = TRUE,
-#             row.names = FALSE)
-
 ```
 
 

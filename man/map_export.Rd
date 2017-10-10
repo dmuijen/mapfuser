@@ -9,23 +9,40 @@ map_export(MF.obj, file = NULL)
 \arguments{
 \item{MF.obj}{The mapfuser object with filled results slot}
 
-\item{file}{A connection or a string giving the file name to write the map
-to.}
+\item{file}{Path to the output file}
 }
 \description{
 Writes the consensus map to the JoinMap ".map" format
 }
 \examples{
 \dontshow{
-tmp <- tempfile()
-MF.obj <- list()
-class(MF.obj) <- "mapfuser"
-MF.obj$result$consensus_map <- data.frame(Marker = LETTERS[1:5], LG = c(1,1,1,2,2), Position = 1:5)
-map_export(MF.obj, file = tmp)
-file.remove(paste0(tmp,".map"))
+fpath <- system.file("extdata", package="mapfuser")
+maps <- list.files(fpath, pattern = "-1", full.names = TRUE)
+MF.obj <- read_maps(mapfiles = maps, sep = ",", header = TRUE, type = "delim")
+MF.obj <- map_qc(MF.obj)
+MF.obj$config$chr <- "1"
+MF.obj <- LPmerge_par(MF.obj = MF.obj, n.cores = 1,
+max.interval = 1, max.int_sel = "auto", weights = NULL)
+file <- paste(tempdir(), "/consensus.map", sep="")
+map_export(MF.obj, file)
 }
 \dontrun{
-map_export(MF.obj = MF.obj, file = "consensus")
+## Read maps
+fpath <- system.file("extdata", package="mapfuser")
+maps <- list.files(fpath, pattern = "Col", full.names = TRUE)
+MF.obj <- read_maps(mapfiles = maps, sep = ",", header = TRUE,
+mapweights = rep(1,7), type = "delim")
+
+## Run map_qc
+MF.obj <- map_qc(MF.obj, anchors = 3)
+
+## Construct consensus map
+MF.obj <- LPmerge_par(MF.obj = MF.obj, n.cores = 2,
+max.interval = 1:3, max.int_sel = "auto", weights = NULL)
+
+## Export to JoinMap format
+file <- paste(tempdir(), "/consensus.map", sep="")
+map_export(MF.obj, file)
 }
 }
 \author{
