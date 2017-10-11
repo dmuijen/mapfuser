@@ -1,6 +1,6 @@
 RESUBMISSION, updated to version 0.1.2 from 0.1.1
 
-Processed the following remarks kindly provided by Swetlana Herbrandt <herbrandt@statistik.tu-dortmund.de>
+Processed the following remarks 
 
 ## Remark doi
 Thanks, please omit the space after 'doi:':
@@ -32,7 +32,7 @@ Maintainer:  Dennis van Muijen <d.van.muijen@rijkzwaan.nl>
 ##### Resubmission 2
 RESUBMISSION, updated to version 0.1.2 from 0.1.1
 
-Processed the following remarks kindly provided by Swetlana Herbrandt <herbrandt@statistik.tu-dortmund.de>
+Processed the following remarks
 
 ## Remark doi
 Thanks, please omit the space after 'doi:':
