@@ -2,7 +2,7 @@
 #' Corrects orientation of input genetic maps
 #' @param MF.obj A mapfuser object
 #' @return A mapfuser object with corrected map orientation
-#' @author Dennis van Muijen
+#' @author Dennis van Muijen, Ram Kumar Basnet
 #' @import mgcv igraph
 #' @importFrom dplyr select filter group_by distinct arrange mutate summarize n inner_join bind_rows slice
 

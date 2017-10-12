@@ -1,6 +1,7 @@
 # check_anchors
 #' Replace sub-linkage groups (e.g. 1.1, 1.2) with truncated linkage group number and split per chromosome for easy integration
 #' @param MF.obj mapfuser object
+#' @author Dennis van Muijen, Ram Kumar Basnet
 #' @param anchors Number of uniquely positioned anchor markers between genetic maps
 #' @return mapfuser object with QC$maps list item containing input maps splitted to unique linkage groups
 

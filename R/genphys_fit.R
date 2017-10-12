@@ -10,7 +10,7 @@
 #' @return The input object is returned with added components recombination rate at a 0.1 Mbp interval,
 #' the general additive model fit (gam) with penalized spline fits per chromosome,
 #' and predictions of centiMorgan positions used for fitting. Markers that have been removed due to z-threshold are saved to the config slot.
-#' @author Dennis van Muijen
+#' @author Dennis van Muijen, Nathalie Dek
 #' @examples
 #' \dontshow{
 #' fpath <- system.file("extdata", package="mapfuser")
@@ -51,6 +51,7 @@ genphys_fit <- function(MF.obj, type = c("consensus", "map"), z = 5, chromosomes
   MF.obj$pspline$recombination_rate <- NULL
   MF.obj$pspline$gam_models <- list()
   MF.obj$pspline$gam_fitted <- NULL
+  MF.obj$pspline$gam_validate <- NULL
 
   for (i in seq_along(chromosomes)) {
     df_i <- filter(df, (!!quote(LG)) == chromosomes[i] & (!!quote(Chr)) == chromosomes[i])
@@ -83,6 +84,13 @@ genphys_fit <- function(MF.obj, type = c("consensus", "map"), z = 5, chromosomes
       markers_toremove <- NULL
     }
     MF.obj$pspline$gam_fitted <- rbind(MF.obj$pspline$gam_fitted, df_i)
+    ## Fit in dense interval for later plotting
+    df_pred <- data.frame(Marker = chromosomes[i],
+                          LG = chromosomes[i],
+      Position = seq(0,trunc(max(df_i$Position)), length.out = 250),
+                          Position_physical = seq(0, trunc(max(df_i$Position_physical)),length.out = 250))
+    df_pred$Predictions <- predict(MF.obj$pspline$gam_models[[i]], df_pred)
+    MF.obj$pspline$gam_validate <- rbind(MF.obj$pspline$gam_validate, df_pred)
   }
   for (i in seq_along(chromosomes)) {
     rr_df <- filter(MF.obj$ref_map, (!!quote(Chr)) == chromosomes[i])

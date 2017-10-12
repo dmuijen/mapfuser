@@ -7,7 +7,7 @@
 #' @param MF.obj A mapfuser object genetics maps loaded and optionally a reference map
 #' @param anchors Number of minimum overlapping anchors marker between at least one other genetic map. At least 3 are required.
 #' @return The input object is returned with filled QC slot containing genetic maps after quality control. Used parameters and inverted or names of removed data are saved to the config slot.
-#' @author Dennis van Muijen
+#' @author Dennis van Muijen, Ram Kumar Basnet
 #' @examples
 #' \dontshow{
 #' fpath <- system.file("extdata", package="mapfuser")

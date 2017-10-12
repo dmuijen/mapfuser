@@ -83,7 +83,7 @@ plot.mapfuser <- function(x, which = c("mapnetwork", "mst", "compare_maps", "sin
       p <- ggplot(aes_string(x = "Position_physical", y = "Position", data_id = "Marker"), data = filter(x$pspline$gam_fitted, (!!quote(LG)) %in% chromosomes))
       p <- p + geom_point() + facet_wrap("LG", scales = "free") + theme_bw() +
         xlab(x$config$ref_name) + ylab("Consensus map (cM)") +
-        geom_line(aes_string(x = "Position_physical", y = "Predictions", group = 1), colour = "red", lwd = 0.4) +
+        geom_line(aes_string(x = "Position_physical", y = "Predictions", group = 1), colour = "red", lwd = 0.4, data = filter(x$pspline$gam_validate, (!!quote(LG)) %in% chromosomes)) +
         guides(colour = FALSE)
       return(ggplotly(p))
     }
