@@ -105,5 +105,11 @@ genphys_fit <- function(MF.obj, type = c("consensus", "map"), z = 5, chromosomes
   MF.obj$pspline$recombination_rate <- MF.obj$pspline$recombination_rate %>%
     na.omit()
   names(MF.obj$pspline$gam_models) <- chromosomes
+  MF.obj$config$mareymap_type <- type
+  if(type == "consensus"){
+    MF.obj$config$mareymap_map <- "consensus"
+  } else {
+    MF.obj$config$mareymap_map <- map
+  }
   return(MF.obj)
 }
